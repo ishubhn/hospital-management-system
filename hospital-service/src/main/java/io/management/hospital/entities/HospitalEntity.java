@@ -19,9 +19,19 @@ public class HospitalEntity {
 	@OneToOne
 	@JoinColumn(name = "address_address_id")
 	private AddressEntity address;
-	
+
 	private String contactNumber;
 	private String alternateContactNumber;
 	private String emailId;
 	private String password;
+
+	public HospitalEntity(String name, AddressEntity address, String contactNumber, String alternateContactNumber,
+	                      String emailId, String password ) {
+		this.name = name;
+		this.address = address;
+		this.contactNumber = contactNumber;
+		this.alternateContactNumber = alternateContactNumber;
+		this.emailId = emailId;
+		this.password = password;
+	}
 }

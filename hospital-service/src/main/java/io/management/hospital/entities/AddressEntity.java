@@ -12,5 +12,13 @@ public class AddressEntity {
 	private String address;
 	private String city;
 	private String state;
+	private String pinCode;
 	private final String COUNTRY = "INDIA";
+
+	public AddressEntity(String address, String city, String state, String pinCode) {
+		this.address = address;
+		this.city = city;
+		this.state = state;
+		this.pinCode = pinCode;
+	}
 }
