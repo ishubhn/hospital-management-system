@@ -1,9 +1,16 @@
 package io.management.hospital.entities;
 
+import lombok.*;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+@Getter
+@Setter
+@ToString
+@NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name="ADDRESS")
 public class AddressEntity {

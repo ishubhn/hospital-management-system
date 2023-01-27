@@ -10,13 +10,13 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="TABLE")
+@Table(name="HOSPITAL")
 public class HospitalEntity {
 	@Id
 	private String hospitalId;
 	private String name;
 
-	@OneToOne
+	@OneToOne(cascade = CascadeType.ALL)     //  This very important, else throws entityNotFoundException
 	@JoinColumn(name = "address_address_id")
 	private AddressEntity address;
 
