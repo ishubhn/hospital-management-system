@@ -1,5 +1,6 @@
 package io.management.hospital.exception;
 
+import io.management.hospital.service.impl.NoSuchDoctorEntityException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,6 +24,16 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(NoSuchHospitalExistException.class)
 	public ResponseEntity<ErrorMessage> handleNoSuchHospitalExistException
 			(HospitalAlreadyPresentException exception, WebRequest request) {
+
+		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+				request.getDescription(true));
+
+		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+	}
+
+	@ExceptionHandler(NoSuchDoctorEntityException.class)
+	public ResponseEntity<ErrorMessage> handleNoSuchDoctorEntityException
+			(NoSuchDoctorEntityException exception, WebRequest request) {
 
 		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
 				request.getDescription(true));
