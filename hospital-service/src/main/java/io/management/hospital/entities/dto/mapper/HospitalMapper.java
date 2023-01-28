@@ -4,9 +4,14 @@ import io.management.hospital.entities.HospitalEntity;
 import io.management.hospital.entities.dto.request.HospitalRequest;
 import io.management.hospital.entities.dto.response.HospitalResponse;
 
+import static io.management.hospital.entities.dto.mapper.AddressMapper.toAddressEntity;
+
 public class HospitalMapper {
-	public static HospitalEntity toHospitalEntity(HospitalRequest request) {
-		return new HospitalEntity(request.getName(), request.getAddress(),
+	// make singleton
+
+	public static HospitalEntity toHospitalEntity(HospitalRequest request) {    //convert address
+		// entity to address request
+		return new HospitalEntity(request.getName(), toAddressEntity(request.getAddress()),
 				request.getContactNumber(), request.getAlternateContactNumber(),
 				request.getEmailId(), request.getPassword());
 	}

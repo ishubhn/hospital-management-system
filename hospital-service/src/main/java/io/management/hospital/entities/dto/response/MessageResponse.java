@@ -1,22 +1,17 @@
 package io.management.hospital.entities.dto.response;
 
-import lombok.*;
-
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
-@AllArgsConstructor
-public class MessageResponse {
-	private LocalDateTime timestamp;
-	private String message;
-	private String status;
+public class MessageResponse extends Response {
 
 	public MessageResponse(String message, String status) {
-		this.timestamp = LocalDateTime.now();
-		this.message = message;
-		this.status = status;
+		super(message, status);
 	}
 }

@@ -12,7 +12,7 @@ import javax.persistence.Table;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Table(name="ADDRESS")
+@Table(name = "ADDRESS")
 public class AddressEntity {
 	@Id
 	private String addressId;
@@ -20,7 +20,7 @@ public class AddressEntity {
 	private String city;
 	private String state;
 	private String pinCode;
-	private final String COUNTRY = "INDIA";
+	private String country;
 
 	public AddressEntity(String address, String city, String state, String pinCode) {
 		this.address = address;
