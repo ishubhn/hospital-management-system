@@ -88,8 +88,8 @@ public class DoctorServiceImpl implements DoctorService {
 		// Set
 		HashSet<String> enrolledHospitalSet = (HashSet<String>) request.getHospitalsEnrolledIn(); //id of hospital
 
-		DoctorEntity doctorEntity = new DoctorEntity(request.getFirstName(), request.getLastName(), request.getEmailId(),
-				request.getContactNumber(), educationDetailsMap, enrolledHospitalSet);
+		DoctorEntity doctorEntity = new DoctorEntity(request.getFirstName(), request.getLastName(),
+				request.getEmailId(), request.getContactNumber(), educationDetailsMap, enrolledHospitalSet);
 
 		String doctorId = UUID.randomUUID().toString();
 
