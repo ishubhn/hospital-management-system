@@ -13,9 +13,9 @@ public interface DoctorService {
 
 	DoctorResponse getDoctorByEmailId(String emailId);
 
-	DoctorResponse getDoctorByName(String name);
+	DoctorResponse getDoctorByName(String firstName, String lastName);
 
-	List<DoctorResponse> getDoctorsLikeName(String name);
+	List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName);
 
 	MessageResponse createDoctor(DoctorRequest request);
 
