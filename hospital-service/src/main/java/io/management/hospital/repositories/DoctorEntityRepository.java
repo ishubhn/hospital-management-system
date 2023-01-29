@@ -10,8 +10,5 @@ import java.util.Optional;
 @Repository
 public interface DoctorEntityRepository extends JpaRepository<DoctorEntity, String> {
 	Optional<DoctorEntity> findByEmailId(String emailId);
-
-	Optional<DoctorEntity> findByFirstNameOrLastName(String firstName, String lastName);
-
 	List<DoctorEntity> findByFirstNameOrLastNameContaining(String firstName, String lastName);
 }

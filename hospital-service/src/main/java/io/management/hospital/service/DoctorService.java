@@ -13,7 +13,7 @@ public interface DoctorService {
 
 	DoctorResponse getDoctorByEmailId(String emailId);
 
-	DoctorResponse getDoctorByName(String firstName, String lastName);
+//	DoctorResponse getDoctorByName(String firstName, String lastName);
 
 	List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName);
 

@@ -11,10 +11,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.UUID;
+import javax.transaction.Transactional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -58,23 +56,18 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
-	public DoctorResponse getDoctorByName(String firstName, String lastName) {
-		return repo.findByFirstNameOrLastName(firstName, lastName)
-				.stream()
-				.map(DoctorMapper::toDoctorResponse)
-				.findFirst()
-				.orElseThrow(() ->
-						new NoSuchDoctorEntityException(
-								String.format("No doctor entity found with id -> %s", firstName, lastName)
-						));
-	}
-
-	@Override
 	public List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName) {
-		return repo.findByFirstNameOrLastNameContaining(firstName, lastName)
+		List<DoctorResponse> doctorResponse = repo.findByFirstNameOrLastNameContaining(firstName, lastName)
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
 				.collect(Collectors.toList());
+
+		if (doctorResponse.isEmpty()) {
+			throw new NoSuchDoctorEntityException(
+					String.format("No doctor entity found with name -> '%s' or '%s'", firstName, lastName));
+		} else {
+			return doctorResponse;
+		}
 	}
 
 	@Override
@@ -107,7 +100,27 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) {
-		return null;
+		Optional<DoctorEntity> doctorEntity = Optional.ofNullable(repo.findById(doctorId).orElse(null));
+		Set<String> hospitalsId = null;
+
+		if (!doctorEntity.isEmpty()) {
+			if (doctorEntity.get().getEducationDetails().isEmpty()) {
+				hospitalsId.add(hospitalId);
+				doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
+			} else {
+				// some hospital already exist
+				hospitalsId = doctorEntity.get().getHospitalsEnrolledIn();
+
+				if (!hospitalsId.contains(hospitalId)) {
+					hospitalsId.add(hospitalId);
+				}
+			}
+			doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
+		}
+		repo.save(doctorEntity.get());
+		return new MessageResponse(String.format("Doctor -> '%s' enrolled in Hospital -> '%s' successfully",
+				doctorId, hospitalId),
+				"SUCCESS");
 	}
 
 	@Override
@@ -116,7 +129,9 @@ public class DoctorServiceImpl implements DoctorService {
 	}
 
 	@Override
+	@Transactional
 	public MessageResponse deleteDoctor(String doctorId) {
-		return null;
+		repo.deleteById(doctorId);
+		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), "SUCCESS");
 	}
 }
