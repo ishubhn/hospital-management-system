@@ -125,7 +125,29 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public MessageResponse addDoctorQualification(String doctorId, String degree, String specializationField) {
-		return null;
+		Optional<DoctorEntity> doctorEntity = repo.findById(doctorId);
+		Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
+
+
+		if (!doctorEntity.isEmpty()) {
+			if (qualificationsMap.isEmpty()) {
+
+				qualificationsMap.put(degree, specializationField);
+				doctorEntity.get().setEducationDetails(qualificationsMap);
+
+			} else {
+				if (!qualificationsMap.containsValue(specializationField)) {
+					qualificationsMap.put(degree, specializationField);
+					doctorEntity.get().setEducationDetails(qualificationsMap);
+				}
+			}
+		}
+
+		repo.save(doctorEntity.get());
+
+		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s' successfully",
+				degree, specializationField, doctorId),
+				"SUCCESS");
 	}
 
 	@Override

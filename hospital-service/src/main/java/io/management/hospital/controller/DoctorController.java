@@ -50,6 +50,14 @@ public class DoctorController {
 				HttpStatus.ACCEPTED);
 	}
 
+	@PostMapping("/add/doctor/qual")
+	public ResponseEntity<MessageResponse> addDoctorQualification(@RequestParam String doctorId,
+	                                                              @RequestParam String degree,
+	                                                              @RequestParam String specializationField) {
+		return new ResponseEntity<>(doctorService.addDoctorQualification(doctorId, degree, specializationField),
+				HttpStatus.ACCEPTED);
+	}
+
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<MessageResponse> deleteDoctorById(@PathVariable String id) {
 		return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
