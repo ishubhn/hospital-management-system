@@ -8,7 +8,7 @@ import io.management.hospital.entities.dto.response.HospitalResponse;
 import io.management.hospital.entities.dto.response.MessageResponse;
 import io.management.hospital.exception.HospitalAlreadyPresentException;
 import io.management.hospital.exception.NoSuchHospitalExistException;
-import io.management.hospital.repositories.HospitalEntityRepositories;
+import io.management.hospital.repositories.HospitalEntityRepository;
 import io.management.hospital.service.HospitalService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 public class HospitalServiceImpl implements HospitalService {
 
 	@Autowired
-	private HospitalEntityRepositories hospitalRepo;
+	private HospitalEntityRepository hospitalRepo;
 
 	@Override
 	public List<HospitalResponse> getAllHospitals() {

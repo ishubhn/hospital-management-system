@@ -24,4 +24,13 @@ public class OwnerEntity {
 	private String emailId;
 	@ElementCollection
 	private Set<String> hospitalOwnedId;
+
+	public OwnerEntity(String firstName, String lastName, String contactNumber, String emailId,
+	                   Set<String> hospitalOwnedId) {
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.contactNumber = contactNumber;
+		this.emailId = emailId;
+		this.hospitalOwnedId = hospitalOwnedId;
+	}
 }

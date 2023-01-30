@@ -5,6 +5,7 @@ import io.management.hospital.entities.dto.mapper.DoctorMapper;
 import io.management.hospital.entities.dto.request.DoctorRequest;
 import io.management.hospital.entities.dto.response.DoctorResponse;
 import io.management.hospital.entities.dto.response.MessageResponse;
+import io.management.hospital.exception.NoSuchDoctorEntityException;
 import io.management.hospital.repositories.DoctorEntityRepository;
 import io.management.hospital.service.DoctorService;
 import lombok.extern.slf4j.Slf4j;

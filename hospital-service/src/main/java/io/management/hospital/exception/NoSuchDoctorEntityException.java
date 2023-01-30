@@ -1,4 +1,4 @@
-package io.management.hospital.service.impl;
+package io.management.hospital.exception;
 
 public class NoSuchDoctorEntityException extends RuntimeException {
 	public NoSuchDoctorEntityException(String errMessage) {

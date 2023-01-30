@@ -7,7 +7,7 @@ import org.springframework.stereotype.Repository;
 import java.util.Optional;
 
 @Repository
-public interface HospitalEntityRepositories extends JpaRepository<HospitalEntity, String> {
+public interface HospitalEntityRepository extends JpaRepository<HospitalEntity, String> {
 	Optional<HospitalEntity> findByEmailId(String emailId);
 	Optional<HospitalEntity> deleteByEmailId(String emailId);
 //	Optional<HospitalEntity> findByPincode(String pinCode);
