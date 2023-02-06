@@ -10,6 +10,9 @@ public class AddressMapper {
                 address.getCity(), address.getState(), address.getPinCode());
     }
 
+    private AddressMapper() {
+    }
+
     public static AddressEntity toAddressEntity(AddressRequest address) {
         return new AddressEntity(address.getAddressDetails(), address.getCity(),
                 address.getState(), address.getPinCode());

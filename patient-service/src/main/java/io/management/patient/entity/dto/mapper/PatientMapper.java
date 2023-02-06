@@ -8,8 +8,6 @@ import org.springframework.stereotype.Component;
 @Component
 public class PatientMapper {
 
-    // TODO: Implement Singleton pattern here (private Constructor) -> So no object would be instantiated
-
     public static PatientResponse toPatientResponse(PatientEntity user) {
         return new PatientResponse(user.getUserId(), user.getFirstName(), user.getLastName(),
                 user.getGender(), user.getContactNumber(), user.getEmailId(),
@@ -20,5 +18,8 @@ public class PatientMapper {
         return new PatientEntity(user.getFirstName(), user.getLastName(), user.getEmailId(), user.getPassword(),
                 user.getContactNumber(), user.getGender(), user.getDateOfBirth(),
                 user.getAddress());
+    }
+
+    private PatientMapper() {
     }
 }
