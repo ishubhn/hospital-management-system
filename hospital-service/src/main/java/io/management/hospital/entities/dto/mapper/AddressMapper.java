@@ -15,4 +15,7 @@ public class AddressMapper {
 				address.getState(), address.getPinCode());
 
 	}
+
+	private AddressMapper() {
+	}
 }

@@ -23,6 +23,8 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorEntityRepository repo;
 
+	private String succesStatus = "SUCCESS";
+
 	@Override
 	public List<DoctorResponse> getAllDoctors() {
 		return repo.findAll()
@@ -96,11 +98,11 @@ public class DoctorServiceImpl implements DoctorService {
 		repo.save(doctorEntity);
 
 		return new MessageResponse(String.format("Doctor entity created successfully -> %s", request.getEmailId()),
-				"SUCCESS");
+				succesStatus);
 	}
 
 	@Override
-	public MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) {
+	public MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) throws NullPointerException {
 		Optional<DoctorEntity> doctorEntity = Optional.ofNullable(repo.findById(doctorId).orElse(null));
 		Set<String> hospitalsId = null;
 
@@ -117,44 +119,42 @@ public class DoctorServiceImpl implements DoctorService {
 				}
 			}
 			doctorEntity.get().setHospitalsEnrolledIn(hospitalsId);
+			repo.save(doctorEntity.get());
 		}
-		repo.save(doctorEntity.get());
 		return new MessageResponse(String.format("Doctor -> '%s' enrolled in Hospital -> '%s' successfully",
 				doctorId, hospitalId),
-				"SUCCESS");
+				succesStatus);
 	}
 
 	@Override
 	public MessageResponse addDoctorQualification(String doctorId, String degree, String specializationField) {
 		Optional<DoctorEntity> doctorEntity = repo.findById(doctorId);
-		Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
 
+		if (doctorEntity.isPresent()) {
+			Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
 
-		if (!doctorEntity.isEmpty()) {
 			if (qualificationsMap.isEmpty()) {
 
 				qualificationsMap.put(degree, specializationField);
 				doctorEntity.get().setEducationDetails(qualificationsMap);
-
 			} else {
 				if (!qualificationsMap.containsValue(specializationField)) {
 					qualificationsMap.put(degree, specializationField);
 					doctorEntity.get().setEducationDetails(qualificationsMap);
 				}
 			}
+
+			repo.save(doctorEntity.get());
 		}
-
-		repo.save(doctorEntity.get());
-
 		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s' successfully",
 				degree, specializationField, doctorId),
-				"SUCCESS");
+				succesStatus);
 	}
 
 	@Override
 	@Transactional
 	public MessageResponse deleteDoctor(String doctorId) {
 		repo.deleteById(doctorId);
-		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), "SUCCESS");
+		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), succesStatus);
 	}
 }

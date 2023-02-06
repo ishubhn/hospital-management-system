@@ -17,4 +17,7 @@ public class DoctorMapper {
 				entity.getEmailId(), entity.getContactNumber(), entity.getEducationDetails(),
 				entity.getHospitalsEnrolledIn());
 	}
+
+	private DoctorMapper() {
+	}
 }

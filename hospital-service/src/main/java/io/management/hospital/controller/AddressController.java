@@ -1,9 +1,7 @@
 package io.management.hospital.controller;
 
-import io.management.hospital.entities.dto.mapper.HospitalMapper;
 import io.management.hospital.entities.dto.response.HospitalResponse;
 import io.management.hospital.service.AddressService;
-import io.management.hospital.service.HospitalService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;

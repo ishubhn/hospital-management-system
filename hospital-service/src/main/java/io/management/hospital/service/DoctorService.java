@@ -13,13 +13,11 @@ public interface DoctorService {
 
 	DoctorResponse getDoctorByEmailId(String emailId);
 
-//	DoctorResponse getDoctorByName(String firstName, String lastName);
-
 	List<DoctorResponse> getDoctorsLikeName(String firstName, String lastName);
 
 	MessageResponse createDoctor(DoctorRequest request);
 
-	MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId);
+	MessageResponse enrollDoctorToHospital(String doctorId, String hospitalId) throws NullPointerException;
 
 	MessageResponse addDoctorQualification(String doctorId, String degree, String specializationField);
 

@@ -25,9 +25,11 @@ public class OwnerServiceImpl implements OwnerService {
 	@Autowired
 	private OwnerEntityRepository repo;
 
+	private String status = "SUCCESS";
+
 	@Override
-	public MessageResponse addOwner(OwnerRequest request) {
-		MessageResponse message = null;
+	public MessageResponse addOwner(OwnerRequest request) throws NullPointerException{
+		MessageResponse message;
 
 		if (request != null) {
 			// ID Generation
@@ -38,10 +40,9 @@ public class OwnerServiceImpl implements OwnerService {
 			repo.save(ownerEntity);
 
 			message = new MessageResponse(String.format("Owner created successfully -> %s", request.getEmailId()),
-					"SUCCESS");
+					status);
 		} else {
-			message = new MessageResponse(String.format("An error occurred while creating new Owner Entity -> %s",
-					request.getEmailId()), "ERROR");
+			message = new MessageResponse("An error occurred while creating new Owner Entity", "ERROR");
 		}
 		return message;
 	}
@@ -65,7 +66,7 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public MessageResponse assignHospitalToOwner(String ownerId, String hospitalId) {
+	public MessageResponse assignHospitalToOwner(String ownerId, String hospitalId) throws NullPointerException {
 		Optional<OwnerEntity> entity = repo.findById(ownerId);
 		Set<String> hospitalsId = null;
 		MessageResponse response = null;
@@ -75,7 +76,7 @@ public class OwnerServiceImpl implements OwnerService {
 			entity.get().setHospitalOwnedId(hospitalsId);
 			response = new MessageResponse(
 					String.format("Hospital -> %s added successfully for owner -> %s", hospitalId, ownerId),
-					"SUCCESS");
+					status);
 		}
 
 		return response;
@@ -84,12 +85,12 @@ public class OwnerServiceImpl implements OwnerService {
 	@Override
 	public MessageResponse removeOwnerById(String id) {
 
-		MessageResponse messageResponse = null;
+		MessageResponse messageResponse;
 
 		if (ifOwnerExist(id)) {
 			repo.deleteById(id);
 			messageResponse = new MessageResponse(String.format("Owner entity deleted" +
-					"successfully -> ", id), "SUCCESS");
+					"successfully -> ", id), status);
 		} else {
 			throw new NoSuchOwnerEntityException(
 					String.format("No such owner entity exist with id -> %s", id));

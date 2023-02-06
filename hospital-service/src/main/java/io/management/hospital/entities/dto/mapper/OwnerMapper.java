@@ -16,4 +16,6 @@ public class OwnerMapper {
 				entity.getContactNumber(), entity.getEmailId(), entity.getHospitalOwnedId());
 	}
 
+	private OwnerMapper() {
+	}
 }

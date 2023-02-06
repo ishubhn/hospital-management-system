@@ -7,7 +7,6 @@ import io.management.hospital.entities.dto.response.HospitalResponse;
 import static io.management.hospital.entities.dto.mapper.AddressMapper.toAddressEntity;
 
 public class HospitalMapper {
-	// TODO: make singleton
 
 	public static HospitalEntity toHospitalEntity(HospitalRequest request) {    //convert address
 		// entity to address request
@@ -20,5 +19,8 @@ public class HospitalMapper {
 		return new HospitalResponse(entity.getHospitalId(), entity.getName(),
 				entity.getAddress(), entity.getContactNumber(), entity.getAlternateContactNumber(),
 				entity.getEmailId());
+	}
+
+	private HospitalMapper() {
 	}
 }
