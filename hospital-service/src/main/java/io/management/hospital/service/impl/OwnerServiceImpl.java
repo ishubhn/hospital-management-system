@@ -65,7 +65,7 @@ public class OwnerServiceImpl implements OwnerService {
 	}
 
 	@Override
-	public MessageResponse assignHospitaltoOwner(String ownerId, String hospitalId) {
+	public MessageResponse assignHospitalToOwner(String ownerId, String hospitalId) {
 		Optional<OwnerEntity> entity = repo.findById(ownerId);
 		Set<String> hospitalsId = null;
 		MessageResponse response = null;

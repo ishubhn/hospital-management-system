@@ -7,13 +7,13 @@ import io.management.hospital.entities.dto.response.OwnerResponse;
 import java.util.List;
 
 public interface OwnerService {
-	public MessageResponse addOwner(OwnerRequest request);
+	MessageResponse addOwner(OwnerRequest request);
 
-	public List<OwnerResponse> getAllOwnersByHospitalId(String hospitalId);
+	List<OwnerResponse> getAllOwnersByHospitalId(String hospitalId);
 
-	public OwnerResponse getOwnerById(String id);
+	OwnerResponse getOwnerById(String id);
 
-	MessageResponse assignHospitaltoOwner(String ownerId, String hospitalId);
+	MessageResponse assignHospitalToOwner(String ownerId, String hospitalId);
 
 	MessageResponse removeOwnerById(String id);
 }
