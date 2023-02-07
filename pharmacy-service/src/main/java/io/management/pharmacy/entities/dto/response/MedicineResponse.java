@@ -4,6 +4,8 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Map;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +16,9 @@ public class MedicineResponse {
 
 	private String companyName;
 
-	private String medicineContent;
+	private Map<String, String> medicineContent;
+
+	private String medicineType;
 
 	private int quantityInStock;
 

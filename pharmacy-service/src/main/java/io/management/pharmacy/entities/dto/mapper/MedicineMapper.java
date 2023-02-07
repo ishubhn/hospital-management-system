@@ -11,13 +11,13 @@ public class MedicineMapper {
 
 	public static MedicineResponse toMedicineResponse(MedicineEntity medicine) {
 		return new MedicineResponse(medicine.getMedicineId(), medicine.getName(), medicine.getCompanyName(),
-				medicine.getMedicineContent(), medicine.getQuantityInStock(), medicine.getStripSize(),
+				medicine.getMedicineContent(), medicine.getMedicineType(), medicine.getQuantityInStock(), medicine.getStripSize(),
 				medicine.getImageFilePath(), medicine.isInStock());
 	}
 
 	public static MedicineEntity toMedicineEntity(MedicineRequest request) {
 		return new MedicineEntity(request.getName(), request.getCompanyName(), request.getMedicineContent(),
-				request.getQuantityInStock(), request.getStripSize(),
+				request.getMedicineType() , request.getQuantityInStock(), request.getStripSize(),
 				request.getImageFilePath(), request.isInStock());
 	}
 }
