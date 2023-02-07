@@ -26,8 +26,12 @@ public class HospitalServiceImpl implements HospitalService {
 	@Autowired
 	private HospitalEntityRepository hospitalRepo;
 
+	private String className = "HospitalService";
+
 	@Override
 	public List<HospitalResponse> getAllHospitals() {
+		log.info("Inside {}#getAllHospitals",className);
+		log.info("All Hospitals returned");
 		return hospitalRepo
 				.findAll()
 				.stream()
@@ -37,6 +41,7 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public HospitalResponse getHospitalByEmailId(String emailId) {
+		log.info("Inside {}#getHospitalByEmailId",className);
 		return hospitalRepo
 				.findByEmailId(emailId)
 				.stream()
@@ -50,7 +55,9 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Override
 	public MessageResponse createHospital(HospitalRequest hospital) throws HospitalAlreadyPresentException {
+		log.info("Inside {}#createHospital",className);
 		if (isHospitalPresent(hospital.getEmailId())) {
+			log.error("Hospital {} already present. New account creation process aborted.",hospital.getEmailId());
 			throw new HospitalAlreadyPresentException(String.format("Hospital '%s' already exist", hospital.getEmailId()));
 		} else {
 			// User Entity
@@ -80,12 +87,13 @@ public class HospitalServiceImpl implements HospitalService {
 	@Override
 	@Transactional
 	public MessageResponse deleteHospitalByEmailId(String emailId) {
+		log.info("Inside {}#deleteHospitalByEmailId",className);
 		if (!isHospitalPresent(emailId)) {
 			throw new NoSuchHospitalExistException(String.format("No such hospital exist -> %s", emailId));
 		}
 
 		hospitalRepo.deleteByEmailId(emailId);
-
+		log.info("Account deleted successfully -> {}", emailId);
 		return new MessageResponse(String.format("Hospital '%s' deleted successfully",emailId),"SUCCESS");
 	}
 
