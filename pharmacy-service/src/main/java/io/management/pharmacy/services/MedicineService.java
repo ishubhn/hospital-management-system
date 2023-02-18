@@ -3,9 +3,9 @@ package io.management.pharmacy.services;
 import io.management.pharmacy.entities.dto.request.MedicineRequest;
 import io.management.pharmacy.entities.dto.response.MedicineResponse;
 import io.management.pharmacy.entities.dto.response.MessageResponse;
+import io.management.pharmacy.exceptions.NoSuchMedicineExistException;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Set;
 
 public interface MedicineService {
@@ -15,5 +15,7 @@ public interface MedicineService {
 
 	Set<MedicineResponse> getMedicineLikeName(String name);
 
-	Map<String, String> getMedicineByComposition(String composition);
+	List<MedicineResponse> getMedicineByComposition(String composition);
+
+	MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException;
 }

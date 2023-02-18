@@ -5,6 +5,7 @@ import io.management.pharmacy.entities.dto.mapper.MedicineMapper;
 import io.management.pharmacy.entities.dto.request.MedicineRequest;
 import io.management.pharmacy.entities.dto.response.MedicineResponse;
 import io.management.pharmacy.entities.dto.response.MessageResponse;
+import io.management.pharmacy.exceptions.NoSuchMedicineExistException;
 import io.management.pharmacy.repositories.MedicineEntityRepository;
 import io.management.pharmacy.services.MedicineService;
 import lombok.extern.slf4j.Slf4j;
@@ -12,12 +13,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
 import static io.management.pharmacy.entities.dto.mapper.MedicineMapper.toMedicineEntity;
+import static io.management.pharmacy.entities.dto.mapper.MedicineMapper.toMedicineResponse;
 
 @Service
 @Slf4j
@@ -39,7 +41,7 @@ public class MedicineServiceImpl implements MedicineService {
 			message = "Medicine saved successfully -> " + id;
 			statusType = "SUCCESS";
 		} else {
-			message = "Medicine request passed in is empty or null";
+			message = "Medicine request passed in is either empty or null";
 		}
 		return new MessageResponse(message, statusType);
 	}
@@ -59,9 +61,27 @@ public class MedicineServiceImpl implements MedicineService {
 	}
 
 	@Override
-	public Map<String, String> getMedicineByComposition(String composition) {
-		return null;
+	public List<MedicineResponse> getMedicineByComposition(String composition) {
+		return repo.findByMedicineContent(composition)
+				.stream()
+				.map(MedicineMapper::toMedicineResponse)
+				.collect(Collectors.toList());
 	}
 
+	@Override
+	public MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException {
+		if (medicineId != null) {
+			Optional<MedicineEntity> entity = repo.findById(medicineId);
+			if (entity.isPresent() && entity.get().isInStock()) {
+				entity.get().setInStock(false);
+				repo.save(entity.get());
+				return toMedicineResponse(entity.get());
+			}
+		}
+
+		throw new NoSuchMedicineExistException(String.format("No medicine with medicine id -> %s exist.",
+					medicineId));
+
+	}
 
 }

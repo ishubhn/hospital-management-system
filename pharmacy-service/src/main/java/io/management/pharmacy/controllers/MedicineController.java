@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/pharmacy")
@@ -27,5 +28,18 @@ public class MedicineController {
 		return ResponseEntity.ok(service.getAllMedicines());
 	}
 
+	@GetMapping("/medicines/{name}")
+	public ResponseEntity<Set<MedicineResponse>> getAllMedicinesLikeName(@PathVariable String name) {
+		return ResponseEntity.ok(service.getMedicineLikeName(name));
+	}
 
+	@GetMapping("/medicines/composition/{content}")
+	public ResponseEntity<List<MedicineResponse>> getAllMedicinesByComposition(@PathVariable String content) {
+		return ResponseEntity.ok(service.getMedicineByComposition(content));
+	}
+
+	@PutMapping("/medicines/{medicineId}")
+	public ResponseEntity<MedicineResponse> deactivateMedicinesInStock(@PathVariable String medicineId) {
+		return ResponseEntity.ok(service.deactivateMedicines(medicineId));
+	}
 }

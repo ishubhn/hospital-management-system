@@ -12,7 +12,7 @@
 	<artifactId>pharmacy</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>pharmacy-service</name>
-	<description>Pharmacy Service</description>
+	<description>Pharmacy-Service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

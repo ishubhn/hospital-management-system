@@ -11,20 +11,12 @@ import java.util.Map;
 @AllArgsConstructor
 public class MedicineResponse {
 	private String medicineId;
-
 	private String name;
-
 	private String companyName;
-
 	private Map<String, String> medicineContent;
-
 	private String medicineType;
-
 	private int quantityInStock;
-
 	private int stripSize;
-
 	private String filePath;
-
 	private boolean inStock;
 }
