@@ -12,7 +12,7 @@
 	<artifactId>patient</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>patient-service</name>
-	<description>Patient-Management-System</description>
+	<description>Patient-Service</description>
 	<properties>
 		<java.version>11</java.version>
 	</properties>

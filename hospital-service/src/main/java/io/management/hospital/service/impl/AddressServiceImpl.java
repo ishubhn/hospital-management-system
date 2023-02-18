@@ -17,7 +17,7 @@ public class AddressServiceImpl	implements AddressService {
 	private HospitalEntityRepository repo;
 
 	@Override
-	public List<HospitalResponse> getHospitalByPincode(String pincode) {
+	public List<HospitalResponse> getHospitalsByPincode(String pincode) {
 		return repo.findByPincode(pincode)
 				.stream()
 				.map(HospitalMapper::toHospitalResponse)

@@ -15,7 +15,8 @@ public interface HospitalEntityRepository extends JpaRepository<HospitalEntity, 
 	Optional<HospitalEntity> deleteByEmailId(String emailId);
 
 	/*	@Query("SELECT h FROM HospitalEntity h JOIN AddressEntity a ON h.address = a.addressId" +
-				"WHERE a.pinCode = :pinCode")*/
+				"WHERE a.pinCode = :pinCode")
+	*/
 	@Query(value = "select * from hospital h join address a " +
 			"on h.address_address_id = a.address_id where a.pin_code=?1",
 			nativeQuery = true)

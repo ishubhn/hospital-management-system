@@ -5,5 +5,5 @@ import io.management.hospital.entities.dto.response.HospitalResponse;
 import java.util.List;
 
 public interface AddressService {
-	List<HospitalResponse> getHospitalByPincode(String pincode);
+	List<HospitalResponse> getHospitalsByPincode(String pincode);
 }
