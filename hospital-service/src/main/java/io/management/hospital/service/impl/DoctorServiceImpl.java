@@ -134,7 +134,6 @@ public class DoctorServiceImpl implements DoctorService {
 			Map<String, String> qualificationsMap = doctorEntity.get().getEducationDetails();
 
 			if (qualificationsMap.isEmpty()) {
-
 				qualificationsMap.put(degree, specializationField);
 				doctorEntity.get().setEducationDetails(qualificationsMap);
 			} else {
@@ -146,9 +145,9 @@ public class DoctorServiceImpl implements DoctorService {
 
 			repo.save(doctorEntity.get());
 		}
-		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s' successfully",
-				degree, specializationField, doctorId),
-				succesStatus);
+		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s'" +
+						" successfully",
+				degree, specializationField, doctorId), succesStatus);
 	}
 
 	@Override
