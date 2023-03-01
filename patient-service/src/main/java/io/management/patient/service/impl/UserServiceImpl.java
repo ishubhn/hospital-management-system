@@ -6,6 +6,7 @@ import io.management.patient.entity.dto.mapper.PatientMapper;
 import io.management.patient.entity.dto.request.PatientRequest;
 import io.management.patient.entity.dto.response.MessageResponse;
 import io.management.patient.entity.dto.response.PatientResponse;
+import io.management.patient.entity.external.Hospital;
 import io.management.patient.exception.UserAlreadyPresentException;
 import io.management.patient.exception.UserNotFoundException;
 import io.management.patient.repository.PatientEntityRepository;
@@ -13,8 +14,10 @@ import io.management.patient.service.UserService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.client.RestTemplate;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
@@ -26,6 +29,9 @@ import static io.management.patient.entity.dto.mapper.PatientMapper.toPatientRes
 public class UserServiceImpl implements UserService {
     @Autowired
     private PatientEntityRepository userRepo;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     public PatientResponse createUser(PatientRequest user) {
         if (isUserPresent(user.getEmailId())) {
@@ -59,6 +65,11 @@ public class UserServiceImpl implements UserService {
                 .map(PatientMapper::toPatientResponse)
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException(String.format("User '%s' not found", emailId)));
+    }
+
+    public List<Hospital> getAllHospitals() {
+        List<Hospital> lists = restTemplate.getForObject("http://HOSPITAL-SERVICE/hospital/search/all", ArrayList.class);
+        return lists;
     }
 
     @Transactional  //No EntityManager with actual transaction available for current thread -
