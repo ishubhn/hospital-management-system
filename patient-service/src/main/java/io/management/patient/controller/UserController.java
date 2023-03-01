@@ -38,5 +38,4 @@ public class UserController {
     public ResponseEntity<MessageResponse> deleteUserByEmailId(@PathVariable String emailId) {
         return new ResponseEntity<>(userService.deleteUserById(emailId), HttpStatus.OK);
     }
-
 }

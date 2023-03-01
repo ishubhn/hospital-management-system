@@ -31,8 +31,6 @@ public class OwnerController {
 		return ResponseEntity.ok(service.addOwner(request));
 	}
 
-
-
 	@DeleteMapping("/delete/{id}")
 	public ResponseEntity<MessageResponse> deleteOwner(@PathVariable String id) {
 		return ResponseEntity.ok(service.removeOwnerById(id));

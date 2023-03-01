@@ -10,12 +10,8 @@ import java.util.Set;
 
 public interface MedicineService {
 	MessageResponse addMedicinesInStock(MedicineRequest medicine);
-
 	List<MedicineResponse> getAllMedicines();
-
 	Set<MedicineResponse> getMedicineLikeName(String name);
-
 	List<MedicineResponse> getMedicineByComposition(String composition);
-
 	MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException;
 }
