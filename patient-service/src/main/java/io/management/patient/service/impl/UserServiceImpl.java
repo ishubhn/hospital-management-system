@@ -30,9 +30,6 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PatientEntityRepository userRepo;
 
-    @Autowired
-    private RestTemplate restTemplate;
-
     public PatientResponse createUser(PatientRequest user) {
         if (isUserPresent(user.getEmailId())) {
             throw new UserAlreadyPresentException(String.format("User '%s' already exist", user.getEmailId()));
@@ -65,11 +62,6 @@ public class UserServiceImpl implements UserService {
                 .map(PatientMapper::toPatientResponse)
                 .findFirst()
                 .orElseThrow(() -> new UserNotFoundException(String.format("User '%s' not found", emailId)));
-    }
-
-    public List<Hospital> getAllHospitals() {
-        List<Hospital> lists = restTemplate.getForObject("http://HOSPITAL-SERVICE/hospital/search/all", ArrayList.class);
-        return lists;
     }
 
     @Transactional  //No EntityManager with actual transaction available for current thread -

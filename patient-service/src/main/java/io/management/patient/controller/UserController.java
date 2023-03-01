@@ -40,8 +40,4 @@ public class UserController {
         return new ResponseEntity<>(userService.deleteUserById(emailId), HttpStatus.OK);
     }
 
-    @GetMapping("/getall")
-    public ResponseEntity<List<Hospital>> getAll() {
-        return new ResponseEntity<>(userService.getAllHospitals(), HttpStatus.OK);
-    }
 }
