@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/owner")
+@RequestMapping("/hospital/owner")
 public class OwnerController {
 	@Autowired
 	private OwnerService service;
