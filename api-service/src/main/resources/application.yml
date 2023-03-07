@@ -22,6 +22,11 @@ spring:
           predicates:
             - Path=/pharmacy/**
 
+        - id: FEEDBACK-SERVICE
+          uri: lb://FEEDBACK-SERVICE
+          predicates:
+            - Path=/ratings/**
+
 eureka:
   instance:
     prefer-ip-address: true
