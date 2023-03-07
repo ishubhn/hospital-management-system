@@ -6,10 +6,11 @@ import io.management.feedback.entities.dto.mapper.PharmacyRatingsMapper;
 import io.management.feedback.entities.dto.request.DoctorEntityRequest;
 import io.management.feedback.entities.dto.request.PharmacyEntityRequest;
 import io.management.feedback.entities.dto.response.DoctorRatingsResponse;
+import io.management.feedback.entities.dto.response.MessageResponse;
 import io.management.feedback.entities.dto.response.PharmacyRatingsResponse;
 import io.management.feedback.repositories.DoctorRatingsEntityRepository;
 import io.management.feedback.repositories.PharmacyRatingsEntityRepository;
-import io.management.feedback.services.RatingService;
+import io.management.feedback.services.DoctorRatingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,13 +18,10 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Service
-public class RatingsServiceImpl implements RatingService {
+public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Autowired
 	private DoctorRatingsEntityRepository doctorRatingsRepo;
-
-	@Autowired
-	private PharmacyRatingsEntityRepository pharmacyRatingsRepo;
 
 	@Override
 	public List<DoctorRatingsResponse> getAllRatingsForDoctor(String doctorId) {
@@ -35,12 +33,8 @@ public class RatingsServiceImpl implements RatingService {
 	}
 
 	@Override
-	public List<PharmacyRatingsResponse> getAllRatingsForMedicine(String medicineId) {
-		return pharmacyRatingsRepo
-				.findByMedicineId(medicineId)
-				.stream()
-				.map(PharmacyRatingsMapper::toPharmacyRatingResponse)
-				.collect(Collectors.toList());
+	public List<DoctorRatingsResponse> getAllDoctorRatingsFromUser(String userId) {
+		return null;
 	}
 
 	@Override
@@ -49,9 +43,17 @@ public class RatingsServiceImpl implements RatingService {
 	}
 
 	@Override
-	public PharmacyRatingsResponse addRatingToMedicines(PharmacyEntityRequest request) {
+	public MessageResponse updateRatingsForDoctor(int ratings) {
 		return null;
 	}
 
+	@Override
+	public MessageResponse updateFeedbackForDoctor(String feedback) {
+		return null;
+	}
 
+	@Override
+	public MessageResponse deleteRatingsForDoctor(String ratingId) {
+		return null;
+	}
 }
