@@ -31,7 +31,7 @@ public class DoctorRatingsController {
 
 	@PostMapping
 	public ResponseEntity<MessageResponse> createNewDoctorRating(@RequestBody DoctorEntityRequest request) {
-		return new ResponseEntity(service.addRatingToDoctor(request), HttpStatus.CREATED);
+		return new ResponseEntity<>(service.addRatingToDoctor(request), HttpStatus.CREATED);
 	}
 
 	@PutMapping("/ratings")

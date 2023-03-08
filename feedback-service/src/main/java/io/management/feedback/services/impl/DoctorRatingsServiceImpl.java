@@ -28,6 +28,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public List<DoctorRatingsResponse> getAllRatingsForDoctor(String doctorId) {
+		log.info("Inside {}#getAllRatingsOfDoctor", className);
 		return doctorRatingsRepo
 				.findByDoctorId(doctorId)
 				.stream()
@@ -37,6 +38,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public List<DoctorRatingsResponse> getAllDoctorsRatingsFromUser(String userId) {
+		log.info("Inside {}#getAllDoctorsRatingsFromUser", className);
 		return doctorRatingsRepo.findByUserId(userId)
 				.stream()
 				.map(DoctorRatingsMapper::toDoctorRatingsResponse)
@@ -68,6 +70,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse updateRatingsForDoctor(int ratings, String ratingId, String userId) {
+		log.info("Inside {}#updateRatingsForDoctor", className);
 		DoctorRatingsResponse ratingEntity = getRatingByRatingId(ratingId);
 		MessageResponse message;
 
@@ -104,17 +107,26 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse updateFeedbackForDoctor(String feedback, String ratingId, String userId) {
+		log.info("Inside {}#updateFeedbackForDoctor", className);
 		DoctorRatingsResponse ratingEntity = getRatingByRatingId(ratingId);
 		MessageResponse message;
 
 		if (ratingEntity.getUserId().equalsIgnoreCase(userId)) {
-			ratingEntity.setFeedback(feedback);
+			if (!(feedback.length() > 300)) {
+				ratingEntity.setFeedback(feedback);
 
-			doctorRatingsRepo.save(DoctorRatingsMapper.toDoctorRatingsEntity(ratingEntity));
+				doctorRatingsRepo.save(DoctorRatingsMapper.toDoctorRatingsEntity(ratingEntity));
 
-			log.info("Feedback is updated successfully for rating id -> {}", ratingId);
-			message = new MessageResponse(String.format("Feedback is updated successfully for rating id -> %s",
-					ratingId), "SUCCESS");
+				log.info("Feedback is updated successfully for rating id -> {}", ratingId);
+				message = new MessageResponse(String.format("Feedback is updated successfully for rating id -> %s",
+						ratingId), "SUCCESS");
+			}
+			else {
+				message = new MessageResponse(String.format("An error occurred while updating feedback successfully for " +
+								"rating id -> %s. Please keep length of the feedback below 300 characters",
+						ratingId), "ERROR");
+			}
+
 		}
 		else {
 			message = new MessageResponse(
@@ -128,6 +140,8 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public MessageResponse deleteRatingsForDoctor(String ratingId) {
+		log.info("Inside {}#deleteRatingsForDoctor", className);
+//		 add condition if exists
 		doctorRatingsRepo.deleteById(ratingId);
 		return new MessageResponse(String.format("Rating deleted successfully for '%s'", ratingId),
 				"SUCCESS");
@@ -135,10 +149,13 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 
 	@Override
 	public int countRatingFromUserForDoctor(String doctorId, String userId) {
+		log.info("Inside {}#countRatingFromUserForDoctor", className);
 		return doctorRatingsRepo.getRatingsCountFromUserForDoctor(doctorId, userId);
 	}
 
+	@Override
 	public DoctorRatingsResponse getRatingByRatingId(String ratingId) {
+		log.info("Inside {}#getRatingByRatingId", className);
 		return doctorRatingsRepo
 				.findById(ratingId)
 				.stream()

@@ -8,9 +8,14 @@ public class PharmacyRatingsMapper {
 
 	private PharmacyRatingsMapper() {}
 
-	private static PharmacyRatingEntity toPharmacyRatingsEntity(PharmacyEntityRequest request) {
+	public static PharmacyRatingEntity toPharmacyRatingsEntity(PharmacyEntityRequest request) {
 		return new PharmacyRatingEntity(request.getMedicineId(), request.getUserId(), request.getRatings(),
 				request.getFeedback());
+	}
+
+	public static PharmacyRatingEntity toPharmacyRatingsEntity(PharmacyRatingsResponse response) {
+		return new PharmacyRatingEntity(response.getRatingsId(), response.getMedicineId(), response.getUserId(),
+				response.getRatings(), response.getFeedback());
 	}
 
 	public static PharmacyRatingsResponse toPharmacyRatingResponse(PharmacyRatingEntity entity) {
