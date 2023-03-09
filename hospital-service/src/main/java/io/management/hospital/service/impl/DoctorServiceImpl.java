@@ -6,6 +6,8 @@ import io.management.hospital.entities.dto.request.DoctorRequest;
 import io.management.hospital.entities.dto.response.DoctorResponse;
 import io.management.hospital.entities.dto.response.MessageResponse;
 import io.management.hospital.exception.NoSuchDoctorEntityException;
+import io.management.hospital.external.dto.Ratings;
+import io.management.hospital.external.services.DoctorRatingService;
 import io.management.hospital.repositories.DoctorEntityRepository;
 import io.management.hospital.service.DoctorService;
 import lombok.extern.slf4j.Slf4j;
@@ -23,7 +25,10 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorEntityRepository repo;
 
-	private String succesStatus = "SUCCESS";
+	@Autowired
+	private DoctorRatingService service;
+
+	private final String successStatus = "SUCCESS";
 
 	@Override
 	public List<DoctorResponse> getAllDoctors() {
@@ -35,15 +40,22 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public DoctorResponse getDoctorById(String id) {
-		return repo.findById(id)
+		List<Ratings> ratings = service.getAllRatingsForDoctor(id);
+		Optional<DoctorResponse> response = repo.findById(id)
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
-				.findFirst()
-				.orElseThrow(() ->
-						new NoSuchDoctorEntityException(
+				.findFirst();
+
+		if (response.isPresent()) {
+			response.get().setRatings(ratings);
+			return response.get();
+		}
+		else {
+			throw new
+					NoSuchDoctorEntityException(
 								String.format("No doctor entity found with id -> %s", id)
-							)
-						);
+							);
+		}
 	}
 
 	@Override
@@ -98,7 +110,7 @@ public class DoctorServiceImpl implements DoctorService {
 		repo.save(doctorEntity);
 
 		return new MessageResponse(String.format("Doctor entity created successfully -> %s", request.getEmailId()),
-				succesStatus);
+				successStatus);
 	}
 
 	@Override
@@ -123,7 +135,7 @@ public class DoctorServiceImpl implements DoctorService {
 		}
 		return new MessageResponse(String.format("Doctor -> '%s' enrolled in Hospital -> '%s' successfully",
 				doctorId, hospitalId),
-				succesStatus);
+				successStatus);
 	}
 
 	@Override
@@ -147,13 +159,13 @@ public class DoctorServiceImpl implements DoctorService {
 		}
 		return new MessageResponse(String.format("Qualification -> ('%s' -> '%s') registered for Doctor -> '%s'" +
 						" successfully",
-				degree, specializationField, doctorId), succesStatus);
+				degree, specializationField, doctorId), successStatus);
 	}
 
 	@Override
 	@Transactional
 	public MessageResponse deleteDoctor(String doctorId) {
 		repo.deleteById(doctorId);
-		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), succesStatus);
+		return new MessageResponse(String.format("Doctor entity with id -> %s is deleted", doctorId), successStatus);
 	}
 }

@@ -18,4 +18,13 @@ public class GlobalExceptionHandler {
 
 		return new ResponseEntity<>(errorMessage, HttpStatus.CONFLICT);
 	}
+
+	@ExceptionHandler(NoSuchRatingException.class)
+	public ResponseEntity<ErrorMessage> handleNoSuchRatingException(NoSuchRatingException exception,
+	                                                                WebRequest request) {
+		ErrorMessage errorMessage = new ErrorMessage(LocalDateTime.now(), exception.getMessage(),
+				request.getDescription(true));
+
+		return new ResponseEntity<>(errorMessage, HttpStatus.NOT_FOUND);
+	}
 }

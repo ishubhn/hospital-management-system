@@ -29,6 +29,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 	@Override
 	public List<DoctorRatingsResponse> getAllRatingsForDoctor(String doctorId) {
 		log.info("Inside {}#getAllRatingsOfDoctor", className);
+
 		return doctorRatingsRepo
 				.findByDoctorId(doctorId)
 				.stream()
@@ -37,7 +38,7 @@ public class DoctorRatingsServiceImpl implements DoctorRatingService {
 	}
 
 	@Override
-	public List<DoctorRatingsResponse> getAllDoctorsRatingsFromUser(String userId) {
+	public List<DoctorRatingsResponse> getAllDoctorsRatingsFromUser(String userId)  throws NoSuchRatingException {
 		log.info("Inside {}#getAllDoctorsRatingsFromUser", className);
 		return doctorRatingsRepo.findByUserId(userId)
 				.stream()

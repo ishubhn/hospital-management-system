@@ -27,7 +27,7 @@ public class DoctorController {
 		return ResponseEntity.ok(doctorService.getDoctorById(id));
 	}
 
-	@GetMapping("/search/id/{emailId}")
+	@GetMapping("/search/email/{emailId}")
 	public ResponseEntity<DoctorResponse> getDoctorDetailsByEmail(@PathVariable String emailId) {
 		return ResponseEntity.ok(doctorService.getDoctorByEmailId(emailId));
 	}
