@@ -27,7 +27,7 @@ public class DoctorController {
 		return ResponseEntity.ok(doctorService.getDoctorById(id));
 	}
 
-	@GetMapping("/search/id/{emailId}")
+	@GetMapping("/search/email/{emailId}")
 	public ResponseEntity<DoctorResponse> getDoctorDetailsByEmail(@PathVariable String emailId) {
 		return ResponseEntity.ok(doctorService.getDoctorByEmailId(emailId));
 	}
@@ -62,4 +62,5 @@ public class DoctorController {
 	public ResponseEntity<MessageResponse> deleteDoctorById(@PathVariable String id) {
 		return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
 	}
+
 }

@@ -1,7 +1,9 @@
 package io.management.hospital.entities.dto.response;
 
+import io.management.hospital.external.dto.Ratings;
 import lombok.*;
 
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
@@ -16,6 +18,18 @@ public class DoctorResponse {
 	private String lastName;
 	private String emailId;
 	private String contactNumber;
+	private List<Ratings> ratings;
 	private Map<String, String> educationDetails;
 	private Set<String> hospitalsEnrolledIn;
+
+	public DoctorResponse(String doctorId, String firstName, String lastName, String emailId, String contactNumber,
+	                      Map<String, String> educationDetails, Set<String> hospitalsEnrolledIn) {
+		this.doctorId = doctorId;
+		this.firstName = firstName;
+		this.lastName = lastName;
+		this.emailId = emailId;
+		this.contactNumber = contactNumber;
+		this.educationDetails = educationDetails;
+		this.hospitalsEnrolledIn = hospitalsEnrolledIn;
+	}
 }
