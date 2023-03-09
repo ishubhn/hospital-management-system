@@ -62,4 +62,5 @@ public class DoctorController {
 	public ResponseEntity<MessageResponse> deleteDoctorById(@PathVariable String id) {
 		return new ResponseEntity<>(doctorService.deleteDoctor(id), HttpStatus.OK);
 	}
+
 }

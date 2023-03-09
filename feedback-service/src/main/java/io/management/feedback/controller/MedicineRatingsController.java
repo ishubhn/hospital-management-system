@@ -45,4 +45,9 @@ public class MedicineRatingsController {
 		return ResponseEntity.ok(
 				service.updateFeedbackForMedicine(request.getFeedback(), request.getRatingId(), request.getUserId()));
 	}
+
+	@DeleteMapping("/{ratingId}")
+	public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
+		return new ResponseEntity<>(service.deleteRatingsForMedicine(ratingId), HttpStatus.OK);
+	}
 }

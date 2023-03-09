@@ -25,10 +25,12 @@ public class HospitalServiceImpl implements HospitalService {
 
 	@Autowired
 	private HospitalEntityRepository hospitalRepo;
+
 	private String className = "HospitalService";
+
 	@Override
 	public List<HospitalResponse> getAllHospitals() {
-		log.info("Inside {}#getAllHospitals",className);
+		log.info("Inside {}#getAllHospitals", className);
 		log.info("All Hospitals returned");
 		return hospitalRepo
 				.findAll()
@@ -36,6 +38,7 @@ public class HospitalServiceImpl implements HospitalService {
 				.map(HospitalMapper::toHospitalResponse)
 				.collect(Collectors.toList());
 	}
+
 	@Override
 	public HospitalResponse getHospitalByEmailId(String emailId) {
 		log.info("Inside {}#getHospitalByEmailId",className);
@@ -49,6 +52,7 @@ public class HospitalServiceImpl implements HospitalService {
 								String.format("Hospital with email id '%s' not found", emailId)
 						));
 	}
+
 	@Override
 	public MessageResponse createHospital(HospitalRequest hospital) throws HospitalAlreadyPresentException {
 		log.info("Inside {}#createHospital",className);

@@ -47,8 +47,8 @@ public class DoctorRatingsController {
 				request.getUserId()), HttpStatus.ACCEPTED);
 	}
 
-	@DeleteMapping("/{doctorId}")
-	public ResponseEntity<MessageResponse> deleteRatingById(String ratingId) {
+	@DeleteMapping("/{ratingId}")
+	public ResponseEntity<MessageResponse> deleteRatingById(@PathVariable String ratingId) {
 		return new ResponseEntity<>(service.deleteRatingsForDoctor(ratingId), HttpStatus.OK);
 	}
 }
