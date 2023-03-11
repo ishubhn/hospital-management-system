@@ -6,6 +6,8 @@ import io.management.pharmacy.entities.dto.request.MedicineRequest;
 import io.management.pharmacy.entities.dto.response.MedicineResponse;
 import io.management.pharmacy.entities.dto.response.MessageResponse;
 import io.management.pharmacy.exceptions.NoSuchMedicineExistException;
+import io.management.pharmacy.external.dto.Ratings;
+import io.management.pharmacy.external.services.MedicineRatingService;
 import io.management.pharmacy.repositories.MedicineEntityRepository;
 import io.management.pharmacy.services.MedicineService;
 import lombok.extern.slf4j.Slf4j;
@@ -28,10 +30,13 @@ public class MedicineServiceImpl implements MedicineService {
 	@Autowired
 	private MedicineEntityRepository repo;
 
+	@Autowired
+	private MedicineRatingService service;
+
 	@Override
 	public MessageResponse addMedicinesInStock(MedicineRequest medicine) {
-		String message = null;
-		String statusType = "FAILURE";
+		String message;
+		String statusType = "ERROR";
 
 		if (medicine != null) {
 			String id = UUID.randomUUID().toString();
@@ -48,24 +53,60 @@ public class MedicineServiceImpl implements MedicineService {
 
 	@Override
 	public List<MedicineResponse> getAllMedicines() {
-		return repo.findAll()
+		List<MedicineResponse> responseList = repo.findAll()
 				.stream()
 				.map(MedicineMapper::toMedicineResponse)
 				.collect(Collectors.toList());
+
+		responseList.forEach(x -> x.setRatings(service.getAllRatingsForMedicine(x.getMedicineId())));
+
+		return responseList;
 	}
 
 	@Override
 	public Set<MedicineResponse> getMedicineLikeName(String name) {
-		return repo.findByNameContaining(name).stream().map(MedicineMapper::toMedicineResponse)
-				.collect(Collectors.toSet());
+		Set<MedicineResponse> responseList = repo.findByNameContaining(name)
+												.stream()
+												.map(MedicineMapper::toMedicineResponse)
+												.collect(Collectors.toSet());
+
+		responseList.forEach(x -> x.setRatings(service.getAllRatingsForMedicine(x.getMedicineId())));
+
+		return responseList;
+	}
+
+	@Override
+	public MedicineResponse getMedicineById(String medicineId) {
+		Optional<MedicineResponse> response = repo.findById(medicineId)
+				.stream()
+				.map(MedicineMapper::toMedicineResponse)
+				.findFirst();
+
+		List<Ratings> ratings =  service.getAllRatingsForMedicine(response.get().getMedicineId());
+
+		if (response.isPresent()) {
+			response.get().setRatings(ratings);
+			return response.get();
+		}
+		else {
+			throw new
+					NoSuchMedicineExistException(
+							String.format("No Such Medicine '%s' Exist", medicineId)
+			);
+
+		}
 	}
 
 	@Override
 	public List<MedicineResponse> getMedicineByComposition(String composition) {
-		return repo.findByMedicineContent(composition)
+		List<MedicineResponse> responseList = repo.findByMedicineContent(composition)
 				.stream()
 				.map(MedicineMapper::toMedicineResponse)
 				.collect(Collectors.toList());
+
+		responseList.forEach(x -> x.setRatings(service.getAllRatingsForMedicine(x.getMedicineId())));
+
+		return responseList;
 	}
 
 	@Override

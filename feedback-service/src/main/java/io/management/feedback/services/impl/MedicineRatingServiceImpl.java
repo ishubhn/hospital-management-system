@@ -54,6 +54,7 @@ public class MedicineRatingServiceImpl implements MedicineRatingService {
 			String ratingId = UUID.randomUUID().toString();
 
 			PharmacyRatingEntity entity = PharmacyRatingsMapper.toPharmacyRatingsEntity(request);
+
 			entity.setRatingsId(ratingId);
 
 			pharmacyRatingsRepo.save(entity);
