@@ -12,6 +12,9 @@ public interface MedicineService {
 	MessageResponse addMedicinesInStock(MedicineRequest medicine);
 	List<MedicineResponse> getAllMedicines();
 	Set<MedicineResponse> getMedicineLikeName(String name);
+
+	MedicineResponse getMedicineById(String medicineId);
+
 	List<MedicineResponse> getMedicineByComposition(String composition);
 	MedicineResponse deactivateMedicines(String medicineId) throws NoSuchMedicineExistException;
 }

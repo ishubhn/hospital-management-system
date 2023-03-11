@@ -32,22 +32,26 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public List<DoctorResponse> getAllDoctors() {
-		return repo.findAll()
+		List<DoctorResponse> responseList = repo.findAll()
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
 				.collect(Collectors.toList());
+
+		responseList.forEach(x -> x.setRatings(service.getAllRatingsForDoctor(x.getDoctorId())));
+
+		return responseList;
 	}
 
 	@Override
 	public DoctorResponse getDoctorById(String id) {
-		List<Ratings> ratings = service.getAllRatingsForDoctor(id);
+
 		Optional<DoctorResponse> response = repo.findById(id)
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
 				.findFirst();
 
 		if (response.isPresent()) {
-			response.get().setRatings(ratings);
+			response.get().setRatings(service.getAllRatingsForDoctor(id));
 			return response.get();
 		}
 		else {
@@ -60,14 +64,25 @@ public class DoctorServiceImpl implements DoctorService {
 
 	@Override
 	public DoctorResponse getDoctorByEmailId(String emailId) {
-		return repo.findByEmailId(emailId)
+
+		Optional<DoctorResponse> response = repo.findByEmailId(emailId)
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
-				.findFirst()
-				.orElseThrow(() ->
-						new NoSuchDoctorEntityException(
-								String.format("No doctor entity found with id -> %s", emailId)
-						));
+				.findFirst();
+
+		List<Ratings> ratings = service.getAllRatingsForDoctor(response.get().getDoctorId());
+
+		if (response.isPresent()) {
+			response.get().setRatings(ratings);
+			return response.get();
+		}
+		else {
+			throw new
+					NoSuchDoctorEntityException(
+					String.format("No doctor entity found with id -> %s", emailId)
+			);
+		}
+
 	}
 
 	@Override
