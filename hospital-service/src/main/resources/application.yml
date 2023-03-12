@@ -36,6 +36,13 @@ management:
     health:
       show-details: always
 
+#feign:
+#  client:
+#    config:
+#      default:
+#        connectTimeout: 160000000
+#        readTimeout: 160000000
+
 # Resilience4j Properties
 resilience4j:
   circuitbreaker:
