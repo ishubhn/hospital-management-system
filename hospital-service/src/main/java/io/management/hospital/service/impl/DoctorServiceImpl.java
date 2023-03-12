@@ -28,7 +28,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorRatingService service;
 
-	private final static String successStatus = "SUCCESS";
+	private static final String successStatus = "SUCCESS";
 
 	@Override
 	public List<DoctorResponse> getAllDoctors() {
