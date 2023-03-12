@@ -28,7 +28,7 @@ public class DoctorServiceImpl implements DoctorService {
 	@Autowired
 	private DoctorRatingService service;
 
-	private final String successStatus = "SUCCESS";
+	private static final String successStatus = "SUCCESS";
 
 	@Override
 	public List<DoctorResponse> getAllDoctors() {
@@ -91,6 +91,8 @@ public class DoctorServiceImpl implements DoctorService {
 				.stream()
 				.map(DoctorMapper::toDoctorResponse)
 				.collect(Collectors.toList());
+
+		doctorResponse.forEach(doctor -> doctor.setRatings(service.getAllRatingsForDoctor(doctor.getDoctorId())));
 
 		if (doctorResponse.isEmpty()) {
 			throw new NoSuchDoctorEntityException(

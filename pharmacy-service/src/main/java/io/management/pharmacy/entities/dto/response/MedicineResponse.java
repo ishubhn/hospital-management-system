@@ -1,16 +1,16 @@
 package io.management.pharmacy.entities.dto.response;
 
 import io.management.pharmacy.external.dto.Ratings;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.util.List;
 import java.util.Map;
 
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class MedicineResponse {
 	private String medicineId;
 	private String name;
@@ -22,6 +22,7 @@ public class MedicineResponse {
 	private List<Ratings> ratings;
 	private String filePath;
 	private boolean inStock;
+	private String about;
 
 	public MedicineResponse(String medicineId, String name, String companyName,
 	                        Map<String, String> medicineContent, String medicineType,
@@ -36,4 +37,5 @@ public class MedicineResponse {
 		this.filePath = filePath;
 		this.inStock = inStock;
 	}
+
 }

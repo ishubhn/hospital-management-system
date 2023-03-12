@@ -12,6 +12,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class DoctorResponse {
 	private String doctorId;
 	private String firstName;
@@ -21,6 +22,7 @@ public class DoctorResponse {
 	private List<Ratings> ratings;
 	private Map<String, String> educationDetails;
 	private Set<String> hospitalsEnrolledIn;
+	private String about;
 
 	public DoctorResponse(String doctorId, String firstName, String lastName, String emailId, String contactNumber,
 	                      Map<String, String> educationDetails, Set<String> hospitalsEnrolledIn) {
@@ -31,5 +33,10 @@ public class DoctorResponse {
 		this.contactNumber = contactNumber;
 		this.educationDetails = educationDetails;
 		this.hospitalsEnrolledIn = hospitalsEnrolledIn;
+	}
+
+	public DoctorResponse(String doctorId, String about) {
+		this.doctorId = doctorId;
+		this.about = about;
 	}
 }
