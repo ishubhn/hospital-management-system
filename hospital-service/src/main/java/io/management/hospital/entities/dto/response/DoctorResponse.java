@@ -12,6 +12,7 @@ import java.util.Set;
 @ToString
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 public class DoctorResponse {
 	private String doctorId;
 	private String firstName;

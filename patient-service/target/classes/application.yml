@@ -35,17 +35,3 @@ management:
   endpoint:
     health:
       show-datails: always
-
-#resilience4j:
-#  circuitbreaker:
-#    instances:
-#      <rating name>:
-#         registerHealthIndicator: true
-#         eventConsumerBufferSize: 10
-#         failureRateThreshold: 50
-#         minimumNumberOfCalls: 5
-#         automaticTransitionFromOpenToHalfOpenEnabled: true
-#         waitDurationInOpenState: 6s
-#         permittedNumberOfCallInHalfOpenState: 3
-#         slidingWindowSize: 10
-#         slidingWindowType: COUNT_BASED
